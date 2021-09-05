@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+    import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
   final Function addTxHandller;
@@ -20,7 +20,7 @@ class NewTransaction extends StatelessWidget {
 
     return Card(
       child: Container(
-        padding: EdgeInsets.all(10),
+      
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
