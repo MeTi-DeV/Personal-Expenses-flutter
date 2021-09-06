@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //use ThemeData for change some default app styles like primaryColor ,accentColor ,default fonts and we can define our custom styles,...
       theme: ThemeData(
         primaryColor: Colors.purple,
         accentColor: Colors.amber,
@@ -66,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transaction> _userTransactions = [
-    Transaction(id: 't1', title: 'Book', amount: 25.99, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Food', amount: 75.99, date: DateTime.now()),
+    // Transaction(id: 't1', title: 'Book', amount: 25.99, date: DateTime.now()),
+    // Transaction(id: 't2', title: 'Food', amount: 75.99, date: DateTime.now()),
   ];
 
   Widget build(BuildContext context) {
