@@ -23,6 +23,7 @@ class TransactionList extends StatelessWidget {
                     child: Text(
                         '${transactions[index].amount.toStringAsFixed(2)} \$',
                         style: TextStyle(
+                          fontFamily: 'OpenSans',
                             color: Colors.purple,
                             fontSize: 20,
                             fontWeight: FontWeight.bold)),
@@ -31,13 +32,12 @@ class TransactionList extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.only(bottom: 12),
-                        child: Text(transactions[index].title.toUpperCase(),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        child: Text(transactions[index].title,
+                            style: Theme.of(context).textTheme.title),
                       ),
                       Container(
                           child: Text(
-                              DateFormat('yyyy-MM-dd | hh : mm : ss')
+                              DateFormat('hh : mm : ss \nEEEE d MMMM y')
                                   .format(transactions[index].date),
                               style: TextStyle(color: Colors.grey)))
                     ],
