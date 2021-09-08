@@ -70,12 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(id: 't1', title: 'Book', amount: 25.99, date: DateTime.now()),
     // Transaction(id: 't2', title: 'Food', amount: 75.99, date: DateTime.now()),
   ];
-// comment 1 : create a List to separate part of whole our list data and pass it the Chart() widget
   List<Transaction> get _recentTransactions {
-    // comment 2 : Where(): this method say to us : i can separate pieces of your list and save it inside my list that it was generated automatically when you call me
-    // it will whrite like map() at the last we have to call toList()
+    
     return _userTransactions.where((tx) {
-      //comment 3 :isAfter(): his method say to us : i get an argument by type of DateTime and separate your time from now till each day you want
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
   }
@@ -95,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //comment 4 : at last we pass our isolated list to our Chart() widget
             Chart(_recentTransactions), TransactionList(_userTransactions),
           ],
         ),

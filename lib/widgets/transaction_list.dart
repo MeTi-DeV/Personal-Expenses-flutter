@@ -8,7 +8,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 700,
       child: transactions.isEmpty
           ? 
              Center(
@@ -21,7 +21,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     SizedBox(height:20),
                     Container(
-                      height: 200,
+                      height: 400,
                       child: Image.asset(
                         'assets/images/waiting.png',
                           
