@@ -13,7 +13,6 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-// comment 1 : define a variable for the DateTimePicker to save time picked by user and pass it to main file
   DateTime  _selectedDate=DateTime.now();
 
   @override
@@ -24,25 +23,18 @@ class _NewTransactionState extends State<NewTransaction> {
       if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate==null) {
         return;
       }
-      // comment 2 : pass _selectedDate as other argument to addTxHandller
       widget.addTxHandller(enteredTitle, enteredAmount, _selectedDate);
 
       Navigator.of(context).pop();
     }
-//comment 3 : its DateTimePicker handller
     void _PresentTimePeaker() {
-      // comment 4 :showDatePicker is a method with 
-      //context : showDatePicker builder
-      // initialDate: current DateTime choosen as default,
-      //firstDate: start of our calendar date, 
-      //lastDate: end of our calendar date, 
+    
    
       showDatePicker(
               context: context,
               initialDate: DateTime.now(),
               firstDate: DateTime(2000),
               lastDate: DateTime.now())
-// comment 5 : its important to call .then() method after showDatePicker to update our date state
           .then((pickDate) {
         if (pickDate == null) {
           return;

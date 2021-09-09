@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-                title: TextStyle(
+                subtitle1: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
               ),
         ),
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-                  button: TextStyle(color: Colors.white , fontWeight: FontWeight.bold)
-            ),
+            subtitle1: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+            button:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       debugShowCheckedModeBanner: false,
       title: 'Personal Expenses',
@@ -44,7 +44,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _addNewTransaction(String txTitle, double txAmount ,DateTime currentDate) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime currentDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
@@ -67,6 +68,13 @@ class _MyHomePageState extends State<MyHomePage> {
             child: NewTransaction(_addNewTransaction),
           );
         });
+  }
+//comment 1 : create a function to remove any Transactions by id
+  void _deleteTransaction(String Txid) {
+    setState(() {
+      //comment 2 : removeWhere is to fliter an transaction by id
+      _userTransactions.removeWhere((tx) => tx.id == Txid);
+    });
   }
 
   final List<Transaction> _userTransactions = [
@@ -95,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions , _deleteTransaction),
           ],
         ),
       ),
