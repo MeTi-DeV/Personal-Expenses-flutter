@@ -17,9 +17,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
         ),
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
+                  button: TextStyle(color: Colors.white , fontWeight: FontWeight.bold)
             ),
       ),
       debugShowCheckedModeBanner: false,
@@ -42,12 +44,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount ,DateTime currentDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      //
+      date: currentDate,
     );
     setState(() {
       _userTransactions.add(newTx);
@@ -71,7 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(id: 't2', title: 'Food', amount: 75.99, date: DateTime.now()),
   ];
   List<Transaction> get _recentTransactions {
-    
     return _userTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
@@ -92,7 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Chart(_recentTransactions), TransactionList(_userTransactions),
+            Chart(_recentTransactions),
+            TransactionList(_userTransactions),
           ],
         ),
       ),
