@@ -13,41 +13,45 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime  _selectedDate=DateTime.now();
+  DateTime _selectedDate = DateTime.now();
 
-  Widget build(BuildContext context) {
-    void _submitData() {
-      final enteredTitle = _titleController.text;
-      final enteredAmount = double.parse(_amountController.text);
-      if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate==null) {
+  void _submitData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      return;
+    }
+    widget.addTxHandller(enteredTitle, enteredAmount, _selectedDate);
+
+    Navigator.of(context).pop();
+  }
+
+  // ignore: non_constant_identifier_names
+  void _PresentTimePeaker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime.now())
+        .then((pickDate) {
+      if (pickDate == null) {
         return;
       }
-      widget.addTxHandller(enteredTitle, enteredAmount, _selectedDate);
-
-      Navigator.of(context).pop();
-    }
-  @override
-    // ignore: non_constant_identifier_names
-    void _PresentTimePeaker() {
-    
-   
-      showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime.now())
-          .then((pickDate) {
-        if (pickDate == null) {
-          return;
-        }
-        setState(() {
-          _selectedDate = pickDate;
-        });
+      setState(() {
+        _selectedDate = pickDate;
       });
-    }
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Card(
       child: Container(
+        padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
