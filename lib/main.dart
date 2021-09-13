@@ -1,10 +1,20 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 import '../models/transaction.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  //comment 1 : use SystemChrome.setPreferredOrientations when we need have an application without rotation between horizontal and vertical
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -69,10 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
-//comment 1 : create a function to remove any Transactions by id
+
   void _deleteTransaction(String Txid) {
     setState(() {
-      //comment 2 : removeWhere is to fliter an transaction by id
       _userTransactions.removeWhere((tx) => tx.id == Txid);
     });
   }
@@ -87,23 +96,68 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+//comment 2 : add a switch button to show chart as true and disable that as false
+  bool _swichChart = false;
   Widget build(BuildContext context) {
+    //comment 4 : MediaQuery.of(context).orientation == Orientation.landscape is for multi screen rotation
+    //between vertical and horizontal with 2 different UI create it in a variable like isLandscape it has a boolean value
+    // that if it was true return Orientation.landscape and if was false return Otherwise
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: [
+        IconButton(
+            onPressed: () => _startaddNewTransaction(context),
+            icon: Icon(Icons.add))
+      ],
+    );
+    final txListWidget = Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.7,
+        child: TransactionList(_userTransactions, _deleteTransaction));
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: [
-          IconButton(
-              onPressed: () => _startaddNewTransaction(context),
-              icon: Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions , _deleteTransaction),
+            //comment 5 : if() means here if isLandscape was true add this Row widget to UI otherwise do nothing it should be without curlybrases
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Show Chart'),
+                  // comment 3 : define the switch button Widget and
+                  Switch(
+                      value: _swichChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _swichChart = val;
+                        });
+                      })
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.3,
+                  child: Chart(_recentTransactions)),
+            if (!isLandscape) txListWidget,
+            if (isLandscape)
+              _swichChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_recentTransactions))
+                  : txListWidget,
           ],
         ),
       ),

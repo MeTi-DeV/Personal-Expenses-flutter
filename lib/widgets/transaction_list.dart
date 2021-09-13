@@ -4,31 +4,34 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  // comment 1 : deleteTx is for transaction delete handller
   final Function deleteTx;
   TransactionList(this.transactions, this.deleteTx);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      // height: 450,
       child: transactions.isEmpty
-          ? Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Not Any Transaction Add Yet',
-                    style: Theme.of(context).textTheme.headline6,
+          ? LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Not Any Transaction Add Yet',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        height: constraints.maxHeight * 0.6,
+                        child: Image.asset(
+                          'assets/images/waiting.png',
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    height:300,
-                    child: Image.asset(
-                      'assets/images/waiting.png',
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                ],
-              ),
+                );
+              },
             )
           : ListView.builder(
               itemCount: transactions.length,
@@ -65,7 +68,7 @@ class TransactionList extends StatelessWidget {
                                     .format(transactions[index].date),
                             style: TextStyle(color: Colors.grey)),
                         trailing: IconButton(
-                          //comment 2 : use deleteTx as delete button function
+                            //comment 2 : use deleteTx as delete button function
                             onPressed: () => deleteTx(transactions[index].id),
                             icon: Icon(Icons.delete,
                                 color: Theme.of(context).errorColor)),
