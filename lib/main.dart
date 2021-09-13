@@ -8,7 +8,6 @@ import './widgets/chart.dart';
 import '../models/transaction.dart';
 
 void main() {
-  //comment 1 : use SystemChrome.setPreferredOrientations when we need have an application without rotation between horizontal and vertical
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
@@ -96,12 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-//comment 2 : add a switch button to show chart as true and disable that as false
   bool _swichChart = false;
   Widget build(BuildContext context) {
-    //comment 4 : MediaQuery.of(context).orientation == Orientation.landscape is for multi screen rotation
-    //between vertical and horizontal with 2 different UI create it in a variable like isLandscape it has a boolean value
-    // that if it was true return Orientation.landscape and if was false return Otherwise
+   
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
@@ -125,13 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //comment 5 : if() means here if isLandscape was true add this Row widget to UI otherwise do nothing it should be without curlybrases
             if (isLandscape)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Show Chart'),
-                  // comment 3 : define the switch button Widget and
                   Switch(
                       value: _swichChart,
                       onChanged: (val) {

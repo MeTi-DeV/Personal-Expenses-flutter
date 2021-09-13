@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
@@ -23,8 +25,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(Weekday).substring(0, 2),
         'amount': totalSum
       };
-      //comment 1 : change list to reverse to begin our list from right to left
-      // it was as default left to right
+     
     }).reversed.toList();
   }
 
