@@ -15,7 +15,6 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountController = TextEditingController();
   DateTime  _selectedDate=DateTime.now();
 
-  @override
   Widget build(BuildContext context) {
     void _submitData() {
       final enteredTitle = _titleController.text;
@@ -27,6 +26,8 @@ class _NewTransactionState extends State<NewTransaction> {
 
       Navigator.of(context).pop();
     }
+  @override
+    // ignore: non_constant_identifier_names
     void _PresentTimePeaker() {
     
    
